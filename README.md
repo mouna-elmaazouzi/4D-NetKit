@@ -1268,7 +1268,7 @@ $google:=cs.NetKit.Google.new($oAuth2;New object("mailType"; "MIME"))
 #### Parameters 
 |Parameter|Type||Description|
 |---------|--- |:---:|------|
-|[labelInfo](#labeiInfo-object)|Object|->|Information for label to retrieve.|
+|[labelInfo](#labelinfo-object)|Object|->|Information for label to retrieve.|
 |Result|Object|<-|[Status object](#status-object-google-class)|
 
 #### Description
@@ -1281,7 +1281,7 @@ The method returns a [**status object**](status-object-google-class) with an add
 
 |Property|Type|Description|
 |---------|--- |------|
-|label|object|contains a newly created instance of Label (see [labelInfo](#labeiInfo-object))|
+|label|object|contains a newly created instance of Label (see [labelInfo](#labelinfo-object))|
 |success|Boolean| [see Status object](#status-object-google-class)|
 |statusText|Text| [see Status object](#status-object-google-class)|
 |errors|Collection| [see Status object](#status-object-google-class)| 
@@ -1368,7 +1368,7 @@ $status:=$google.mail.deleteLabel($labelId)
 |Parameter|Type||Description|
 |---------|--- |:---:|------|
 |labelId|Text|->|The ID of the label to retrieve.|
-|Result|Object|<-|information of the returned label|
+|Result|Object|<-|[labelInfo](#labelinfo-object)|
 
 #### Description
 
@@ -1376,13 +1376,11 @@ $status:=$google.mail.deleteLabel($labelId)
 
 #### Returned object 
 
-The method returns a [**labelInfo**](#labeiInfo-object) with the following additional properties:
+The method returns a [**labelInfo**](#labelinfo-object) with the following additional properties:
 
-The method returns the object *label* with the following properties:
 
 |Property|Type|Description|
 |---------|--- |------|
-|id|Text|The ID of the label.|
 |type|Text|The owner type for the label. <br></br> Can be: <ul><li>"system" : Labels created by Gmail.</li><li>"user" : Custom labels created by the user or application.</li></ul>User labels are created by the user and can be modified and deleted by the user and can be applied to any message or thread. </br>System labels are internally created and cannot be added, modified, or deleted. They're may be able to be applied to or removed from messages and threads under some circumstances but this is not guaranteed. For example, users can apply and remove the INBOX and UNREAD labels from messages and threads, but cannot apply or remove the DRAFTS or SENT labels from messages or threads.|
 |messagesTotal|Integer|The total number of messages with the label.|
 |messagesUnread|Integer|The number of unread messages with the label.|
@@ -1675,7 +1673,7 @@ $result:=$google.mail.update($mailIds; {addLabelIds: ["UNREAD"]})
 |Parameter|Type||Description|
 |---------|--- |:---:|------|
 |labelId|Text|->|The ID of the label to retrieve.|
-|[labelInfo](#labeiInfo-object)|Object|->|Information for label to retrieve.|
+|[labelInfo](#labelinfo-object)|Object|->|Information for label to retrieve.|
 |Result|Object|<-|[Status object](#status-object-google-class)|
 
 #### Description
@@ -1689,7 +1687,7 @@ The method returns a [**status object**](status-object-google-class) with an add
 
 |Property|Type|Description|
 |---------|--- |------|
-|label|object|contains an instance of Label (see [labelInfo](#labeiInfo-object))|
+|label|object|contains an instance of Label (see [labelInfo](#labelinfo-object))|
 |success|Boolean| [see Status object](#status-object-google-class)|
 |statusText|Text| [see Status object](#status-object-google-class)|
 |errors|Collection| [see Status object](#status-object-google-class)|
@@ -1704,10 +1702,11 @@ $status:=$google.mail.updateLabel($labelId; {name:"Backup January"})
 ```
 ### labelInfo object 
 
-Several Google.mail label management functions uses a `labelInfo` object, containing the following properties to provide information about the label being managed:
+Several Google.mail label management functions uses a `labelInfo` object, containing the following properties to provide information about the label:
 
 |Property|Type|Description|
 |---------|--- |------|
+|id|Text|The ID of the label.|
 |name|Text|The display name of the label. (mandatory)|
 |messageListVisibility|Text|The visibility of messages with this label in the message list.<br></br> Can be: <ul><li>"show" : Show the label in the message list. </li><li>"hide" : Do not show the label in the message list. </li></ul>|
 |labelListVisibility|Text|The visibility of the label in the label list. <br></br> Can be:<ul><li>"labelShow" : Show the label in the label list. </li><li>"labelShowIfUnread" : Show the label if there are any unread messages with that label. </li><li>"labelHide" : Do not show the label in the label list. </li></ul>|
