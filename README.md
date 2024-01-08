@@ -1268,7 +1268,7 @@ $google:=cs.NetKit.Google.new($oAuth2;New object("mailType"; "MIME"))
 #### Parameters 
 |Parameter|Type||Description|
 |---------|--- |:---:|------|
-|[labelInfo](#labelinfo-object)|Object|->|Information for label to retrieve.|
+|[labelInfo](#labelinfo-object)|Object|->|Label information.|
 |Result|Object|<-|[Status object](#status-object-google-class)|
 
 #### Description
@@ -1281,14 +1281,14 @@ The method returns a [**status object**](status-object-google-class) with an add
 
 |Property|Type|Description|
 |---------|--- |------|
-|label|object|contains a newly created instance of Label (see [labelInfo](#labelinfo-object))|
+|label|Object|contains a newly created instance of Label (see [labelInfo](#labelinfo-object))|
 |success|Boolean| [see Status object](#status-object-google-class)|
 |statusText|Text| [see Status object](#status-object-google-class)|
 |errors|Collection| [see Status object](#status-object-google-class)| 
 
 #### Example
 
-To create label named 'Backup' :
+To create a label named 'Backup':
 
 ```4d
 $status:=$google.mail.createLabel({name: "Backup"})
@@ -1334,18 +1334,18 @@ $status:=$google.mail.delete($mailId; True)
 
 ### Google.mail.deleteLabel()
 
-**Google.mail.deleteLabel**( { *labelId* : Text } ) : Object
+**Google.mail.deleteLabel**( *labelId* : Text ) : Object
 
 #### Parameters 
 |Parameter|Type||Description|
 |---------|--- |:---:|------|
-|labelId|Text|->|The ID of the label to retrieve. |
+|labelId|Text|->|The ID of the label|
 |Result|Object|<-|[Status object](#status-object-google-class)|
 
 #### Description
 
 `Google.mail.deleteLabel()` immediately and permanently deletes the specified label and removes it from any messages and threads that it is applied to. 
-> Only available for labels with type="user".
+> This method is only available for labels with type="user".
 
 #### Returned object 
 
@@ -1367,21 +1367,21 @@ $status:=$google.mail.deleteLabel($labelId)
 #### Parameters 
 |Parameter|Type||Description|
 |---------|--- |:---:|------|
-|labelId|Text|->|The ID of the label to retrieve.|
+|labelId|Text|->|The ID of the label|
 |Result|Object|<-|[labelInfo](#labelinfo-object)|
 
 #### Description
 
-`Google.mail.getLabel()` returns the information of a label such its name, the total message count, or unread message with that label. 
+`Google.mail.getLabel()` returns the information of a label as a [labelInfo](#labelinfo-object) object.
 
 #### Returned object 
 
-The method returns a [**labelInfo**](#labelinfo-object) with the following additional properties:
+The returned [**labelInfo**](#labelinfo-object) object contains the following additional properties:
 
 
 |Property|Type|Description|
-|---------|--- |------|
-|type|Text|The owner type for the label. <br></br> Can be: <ul><li>"system" : Labels created by Gmail.</li><li>"user" : Custom labels created by the user or application.</li></ul>User labels are created by the user and can be modified and deleted by the user and can be applied to any message or thread. </br>System labels are internally created and cannot be added, modified, or deleted. They're may be able to be applied to or removed from messages and threads under some circumstances but this is not guaranteed. For example, users can apply and remove the INBOX and UNREAD labels from messages and threads, but cannot apply or remove the DRAFTS or SENT labels from messages or threads.|
+|---------|---|------|
+|type|Text|The owner type for the label. <br></br> Can be: <ul><li>"system": Labels created by Gmail.</li><li>"user": Custom labels created by the user or application.</li></ul>User labels are created by the user and can be modified and deleted by the user and can be applied to any message or thread. </br>System labels are internally created and cannot be added, modified, or deleted. They're may be able to be applied to or removed from messages and threads under some circumstances but this is not guaranteed. For example, users can apply and remove the INBOX and UNREAD labels from messages and threads, but cannot apply or remove the DRAFTS or SENT labels from messages or threads.|
 |messagesTotal|Integer|The total number of messages with the label.|
 |messagesUnread|Integer|The number of unread messages with the label.|
 |threadsTotal|Integer|The total number of threads with the label.|
@@ -1672,14 +1672,14 @@ $result:=$google.mail.update($mailIds; {addLabelIds: ["UNREAD"]})
 #### Parameters 
 |Parameter|Type||Description|
 |---------|--- |:---:|------|
-|labelId|Text|->|The ID of the label to retrieve.|
-|[labelInfo](#labelinfo-object)|Object|->|Information for label to retrieve.|
+|labelId|Text|->|The ID of the label|
+|[labelInfo](#labelinfo-object)|Object|->|Label information to update|
 |Result|Object|<-|[Status object](#status-object-google-class)|
 
 #### Description
 
 `Google.mail.updateLabel()` updates the specified label.
-> Only available for labels with type="user".
+> This method is only available for labels with type="user".
 
 #### Returned object 
 
@@ -1687,7 +1687,7 @@ The method returns a [**status object**](status-object-google-class) with an add
 
 |Property|Type|Description|
 |---------|--- |------|
-|label|object|contains an instance of Label (see [labelInfo](#labelinfo-object))|
+|label|Object|contains an instance of Label (see [labelInfo](#labelinfo-object))|
 |success|Boolean| [see Status object](#status-object-google-class)|
 |statusText|Text| [see Status object](#status-object-google-class)|
 |errors|Collection| [see Status object](#status-object-google-class)|
@@ -1702,15 +1702,15 @@ $status:=$google.mail.updateLabel($labelId; {name:"Backup January"})
 ```
 ### labelInfo object 
 
-Several Google.mail label management functions uses a `labelInfo` object, containing the following properties to provide information about the label:
+Several Google.mail label management functions use a `labelInfo` object, containing the following properties:
 
 |Property|Type|Description|
 |---------|--- |------|
 |id|Text|The ID of the label.|
 |name|Text|The display name of the label. (mandatory)|
-|messageListVisibility|Text|The visibility of messages with this label in the message list.<br></br> Can be: <ul><li>"show" : Show the label in the message list. </li><li>"hide" : Do not show the label in the message list. </li></ul>|
-|labelListVisibility|Text|The visibility of the label in the label list. <br></br> Can be:<ul><li>"labelShow" : Show the label in the label list. </li><li>"labelShowIfUnread" : Show the label if there are any unread messages with that label. </li><li>"labelHide" : Do not show the label in the label list. </li></ul>|
-|color|Object|The color to assign to the label (color is only available for labels that have their type set to user). <br></br> The color object has 2 attributes : <ul><li> textColor : text : The text color of the label, represented as hex string. This field is required in order to set the color of a label. </li><li> backgroundColor : text : The background color represented as hex string #RRGGBB (ex #000000). This field is required in order to set the color of a label. </li></ul>|
+|messageListVisibility|Text|The visibility of messages with this label in the message list.<br></br> Can be: <ul><li>"show": Show the label in the message list. </li><li>"hide": Do not show the label in the message list. </li></ul>|
+|labelListVisibility|Text|The visibility of the label in the label list. <br></br> Can be:<ul><li>"labelShow": Show the label in the label list. </li><li>"labelShowIfUnread" : Show the label if there are any unread messages with that label. </li><li>"labelHide": Do not show the label in the label list. </li></ul>|
+|color|Object|The color to assign to the label (color is only available for labels that have their type set to user). <br></br> The color object has 2 attributes : <ul><li> textColor: text: The text color of the label, represented as hex string. This field is required in order to set the color of a label. </li><li> backgroundColor: text: The background color represented as hex string #RRGGBB (ex #000000). This field is required in order to set the color of a label. </li></ul>|
 
 ### Status object (Google class)
 
