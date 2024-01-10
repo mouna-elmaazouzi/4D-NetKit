@@ -1381,7 +1381,6 @@ The returned [**labelInfo**](#labelinfo-object) object contains the following ad
 
 |Property|Type|Description|
 |---------|---|------|
-|type|Text|The owner type for the label. <br></br> Can be: <ul><li>"system": Labels created by Gmail.</li><li>"user": Custom labels created by the user or application.</li></ul>User labels are created by the user and can be modified and deleted by the user and can be applied to any message or thread. </br>System labels are internally created and cannot be added, modified, or deleted. They're may be able to be applied to or removed from messages and threads under some circumstances but this is not guaranteed. For example, users can apply and remove the INBOX and UNREAD labels from messages and threads, but cannot apply or remove the DRAFTS or SENT labels from messages or threads.|
 |messagesTotal|Integer|The total number of messages with the label.|
 |messagesUnread|Integer|The number of unread messages with the label.|
 |threadsTotal|Integer|The total number of threads with the label.|
@@ -1702,7 +1701,7 @@ $status:=$google.mail.updateLabel($labelId; {name:"Backup January"})
 ```
 ### labelInfo object 
 
-Several Google.mail label management functions use a `labelInfo` object, containing the following properties:
+Several Google.mail label management methods use a `labelInfo` object, containing the following properties:
 
 |Property|Type|Description|
 |---------|--- |------|
@@ -1710,7 +1709,8 @@ Several Google.mail label management functions use a `labelInfo` object, contain
 |name|Text|The display name of the label. (mandatory)|
 |messageListVisibility|Text|The visibility of messages with this label in the message list.<br></br> Can be: <ul><li>"show": Show the label in the message list. </li><li>"hide": Do not show the label in the message list. </li></ul>|
 |labelListVisibility|Text|The visibility of the label in the label list. <br></br> Can be:<ul><li>"labelShow": Show the label in the label list. </li><li>"labelShowIfUnread" : Show the label if there are any unread messages with that label. </li><li>"labelHide": Do not show the label in the label list. </li></ul>|
-|color|Object|The color to assign to the label (color is only available for labels that have their type set to user). <br></br> The color object has 2 attributes : <ul><li> textColor: text: The text color of the label, represented as hex string. This field is required in order to set the color of a label. </li><li> backgroundColor: text: The background color represented as hex string #RRGGBB (ex #000000). This field is required in order to set the color of a label. </li></ul>|
+|[color](https://developers.google.com/gmail/api/reference/rest/v1/users.labels?hl=en#color)|Object|The color to assign to the label (color is only available for labels that have their type set to user). <br></br> The color object has 2 attributes : <ul><li> textColor: text: The text color of the label, represented as hex string. This field is required in order to set the color of a label. </li><li> backgroundColor: text: The background color represented as hex string #RRGGBB (ex #000000). This field is required in order to set the color of a label. </li></ul>|
+|type|Text|The owner type for the label. <br></br> Can be: <ul><li>"system": Labels created by Gmail.</li><li>"user": Custom labels created by the user or application.</li></ul>System labels are internally created and cannot be added, modified, or deleted. They're may be able to be applied to or removed from messages and threads under some circumstances but this is not guaranteed. For example, users can apply and remove the INBOX and UNREAD labels from messages and threads, but cannot apply or remove the DRAFTS or SENT labels from messages or threads. </br>User labels are created by the user and can be modified and deleted by the user and can be applied to any message or thread. |
 
 ### Status object (Google class)
 
